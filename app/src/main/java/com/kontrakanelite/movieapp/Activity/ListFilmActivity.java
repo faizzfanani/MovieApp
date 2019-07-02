@@ -22,7 +22,6 @@ public class ListFilmActivity extends AppCompatActivity {
     private TypedArray dataPhoto;
 
     private MovieAdapter adapter;
-    private ListView listView;
     private ArrayList<MovieModel>movies;
 
     @Override
@@ -31,6 +30,7 @@ public class ListFilmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_film);
 
         adapter = new MovieAdapter(getApplicationContext());
+        ListView listView;
         listView = findViewById(R.id.lv_movie_list);
         listView.setAdapter(adapter);
 

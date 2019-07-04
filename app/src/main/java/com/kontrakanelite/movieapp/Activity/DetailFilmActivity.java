@@ -3,6 +3,7 @@ package com.kontrakanelite.movieapp.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.kontrakanelite.movieapp.Model.MovieModel;
@@ -11,6 +12,7 @@ import com.kontrakanelite.movieapp.R;
 public class DetailFilmActivity extends AppCompatActivity {
     TextView title, description, releaseDate;
     ImageView poster;
+    ScrollView scrollView;
     public static final String MOVIE = "pilem";
 
     @Override
@@ -22,13 +24,13 @@ public class DetailFilmActivity extends AppCompatActivity {
         description = findViewById(R.id.detail_description);
         releaseDate = findViewById(R.id.detail_release_date);
         poster = findViewById(R.id.detail_poster);
+        scrollView = findViewById(R.id.detail_scrollview);
 
         MovieModel movie = getIntent().getParcelableExtra(MOVIE);
         title.setText(movie.getTitle());
         description.setText(movie.getDescription());
         releaseDate.setText(movie.getDate());
         poster.setImageResource(movie.getImage());
-
     }
 }
 

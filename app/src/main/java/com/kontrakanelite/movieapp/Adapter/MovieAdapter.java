@@ -67,7 +67,7 @@ public class MovieAdapter extends BaseAdapter {
             title.setText(movie.getTitle());
             description.setText(movie.getDescription());
             releaseDate.setText(movie.getDate());
-            Glide.with(context).load(movie.getImage()).override(300,300).into(poster);
+            Glide.with(context).load(movie.getImage()).override(500,500).into(poster);
         }
     }
 }

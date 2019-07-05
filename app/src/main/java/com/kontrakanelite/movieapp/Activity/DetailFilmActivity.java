@@ -1,7 +1,10 @@
 package com.kontrakanelite.movieapp.Activity;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,6 +34,21 @@ public class DetailFilmActivity extends AppCompatActivity {
         description.setText(movie.getDescription());
         releaseDate.setText(movie.getDate());
         poster.setImageResource(movie.getImage());
+
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
+        View view = getSupportActionBar().getCustomView();
+        ImageView actionBack = view.findViewById(R.id.btn_back);
+
+        actionBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListFilmActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }
 

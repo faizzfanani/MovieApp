@@ -34,6 +34,7 @@
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/text_title"
+                android:layout_marginTop="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_container"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
             <TextView
                 android:id="@+id/tv_description"
                 style="@style/text_description"
-                android:maxLines="3"
+                android:maxLength="120"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_releaseDate" />

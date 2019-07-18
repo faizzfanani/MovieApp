@@ -1,37 +1,36 @@
-package com.kontrakanelite.movieapp.Activity;
+package com.kontrakanelite.movieapp.activity;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.kontrakanelite.movieapp.Adapter.MovieAdapter;
-import com.kontrakanelite.movieapp.Model.MovieModel;
+import com.kontrakanelite.movieapp.adapter.MovieAdapter;
+import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
 import java.util.ArrayList;
 
-public class ListFilmActivity extends AppCompatActivity {
+public class movieList extends Fragment {
     private String[]dataTitle;
     private String[]dataDescription;
     private String[]dataReleaseDate;
     private TypedArray dataPhoto;
 
     private MovieAdapter adapter;
-    private ArrayList<MovieModel>movies;
-
+    private ArrayList<MovieModel> movies;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_film);
-
-        adapter = new MovieAdapter(getApplicationContext());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        adapter = new MovieAdapter(getActivity());
+        View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
         ListView listView;
-        listView = findViewById(R.id.lv_movie_list);
+        listView = rootView.findViewById(R.id.lv_movie);
         listView.setAdapter(adapter);
 
         prepare();
@@ -40,19 +39,19 @@ public class ListFilmActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ListFilmActivity.this, movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                 MovieModel movie = new MovieModel();
                 movie.setTitle(dataTitle[i]);
                 movie.setDescription(dataDescription[i]);
                 movie.setDate(dataReleaseDate[i]);
                 movie.setImage(dataPhoto.getResourceId(i, 1));
-                Intent moveWithObjectIntent = new Intent(ListFilmActivity.this, DetailFilmActivity.class);
+                Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
                 moveWithObjectIntent.putExtra(DetailFilmActivity.MOVIE, movie);
                 startActivity(moveWithObjectIntent);
             }
         });
+        return rootView;
     }
-
     private void addItem() {
         movies = new ArrayList<>();
         for (int i = 0; i < dataTitle.length; i++) {

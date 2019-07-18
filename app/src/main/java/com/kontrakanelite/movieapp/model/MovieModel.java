@@ -1,4 +1,4 @@
-package com.kontrakanelite.movieapp.Model;
+package com.kontrakanelite.movieapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

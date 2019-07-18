@@ -1,4 +1,4 @@
-package com.kontrakanelite.movieapp.Adapter;
+package com.kontrakanelite.movieapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.kontrakanelite.movieapp.Model.MovieModel;
+import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
 import java.util.ArrayList;

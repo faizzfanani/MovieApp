@@ -17,13 +17,5 @@
             android:layout_height = "match_parent"
             android:src = "@drawable/ic_arrow_back"
             android:layout_marginEnd="8dp"/>
-
-        <TextView
-            android:id="@+id/bar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/movie_details"
-            android:textColor="@color/light_grey"
-            android:textSize="20sp" />
             </LinearLayout>
 </LinearLayout>

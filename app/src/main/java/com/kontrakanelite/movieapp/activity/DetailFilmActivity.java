@@ -1,4 +1,4 @@
-package com.kontrakanelite.movieapp.Activity;
+package com.kontrakanelite.movieapp.activity;
 
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.kontrakanelite.movieapp.Model.MovieModel;
+import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
 public class DetailFilmActivity extends AppCompatActivity {

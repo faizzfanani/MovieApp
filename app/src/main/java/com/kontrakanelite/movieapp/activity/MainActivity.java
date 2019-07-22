@@ -8,10 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.kontrakanelite.movieapp.adapter.TabAdapter;
 import com.kontrakanelite.movieapp.R;
+import com.kontrakanelite.movieapp.fragment.movieList;
+import com.kontrakanelite.movieapp.fragment.tvShowList;
 
 public class MainActivity extends AppCompatActivity {
     public TabAdapter adapter;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

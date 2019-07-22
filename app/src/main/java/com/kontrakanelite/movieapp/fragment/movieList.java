@@ -1,17 +1,20 @@
-package com.kontrakanelite.movieapp.activity;
+package com.kontrakanelite.movieapp.fragment;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.kontrakanelite.movieapp.adapter.MovieAdapter;
+import com.kontrakanelite.movieapp.ItemClickSupport;
+import com.kontrakanelite.movieapp.activity.DetailFilmActivity;
+import com.kontrakanelite.movieapp.adapter.ListAdapter;
 import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
@@ -23,22 +26,25 @@ public class movieList extends Fragment {
     private String[]dataReleaseDate;
     private TypedArray dataPhoto;
 
-    private MovieAdapter adapter;
+    private ListAdapter adapter;
     private ArrayList<MovieModel> movies;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        adapter = new MovieAdapter(getActivity());
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        movies = new ArrayList<>();
+        adapter = new ListAdapter(getActivity());
         View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        ListView listView;
-        listView = rootView.findViewById(R.id.lv_movie);
-        listView.setAdapter(adapter);
+        RecyclerView recyclerView;
+        recyclerView = rootView.findViewById(R.id.rv_movie);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
 
         prepare();
         addItem();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
                 Toast.makeText(getContext(), movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                 MovieModel movie = new MovieModel();
                 movie.setTitle(dataTitle[i]);
@@ -50,6 +56,7 @@ public class movieList extends Fragment {
                 startActivity(moveWithObjectIntent);
             }
         });
+
         return rootView;
     }
     private void addItem() {
@@ -66,9 +73,9 @@ public class movieList extends Fragment {
     }
 
     private void prepare() {
-        dataTitle = getResources().getStringArray(R.array.data_title);
-        dataDescription = getResources().getStringArray(R.array.data_description);
-        dataReleaseDate = getResources().getStringArray(R.array.data_release_date);
-        dataPhoto = getResources().obtainTypedArray(R.array.data_poster);
+        dataTitle = getResources().getStringArray(R.array.movie_title);
+        dataDescription = getResources().getStringArray(R.array.movie_description);
+        dataReleaseDate = getResources().getStringArray(R.array.movie_release_date);
+        dataPhoto = getResources().obtainTypedArray(R.array.movie_poster);
     }
 }

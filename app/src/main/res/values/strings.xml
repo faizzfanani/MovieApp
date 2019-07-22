@@ -5,6 +5,7 @@
     <string name="description">Overview</string>
     <string name="release_date">release date</string>
     <string name="movie_details">movie details</string>
+    <string name="language_setting">language setting</string>
 
     <string-array name="movie_title">
         <item>Avenger Infinity War</item>

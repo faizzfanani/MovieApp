@@ -6,6 +6,8 @@
     <string name="release_date">release date</string>
     <string name="movie_details">movie details</string>
     <string name="language_setting">language setting</string>
+    <string name="tab1">Movies</string>
+    <string name="tab2">Tv Shows</string>
 
     <string-array name="movie_title">
         <item>Avenger Infinity War</item>

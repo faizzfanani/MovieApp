@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String tab1 = getString(R.string.tab1);
+        String tab2 = getString(R.string.tab2);
         ViewPager viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new movieList(), "Movies");
-        adapter.addFragment(new tvShowList(), "TV Shows");
+        adapter.addFragment(new movieList(), tab1);
+        adapter.addFragment(new tvShowList(), tab2);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

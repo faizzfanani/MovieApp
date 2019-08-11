@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
+import java.util.Objects;
+
 public class DetailFilmActivity extends AppCompatActivity {
     TextView title, description, releaseDate;
     ImageView poster;
@@ -34,7 +36,7 @@ public class DetailFilmActivity extends AppCompatActivity {
         releaseDate.setText(movie.getDate());
         poster.setImageResource(movie.getImage());
 
-        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(this.getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.action_bar);
         View view = getSupportActionBar().getCustomView();

@@ -4,16 +4,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MovieModel implements Parcelable {
-    private int image;
+    private String image;
     private String title;
     private String description;
     private String date;
 
-    public int getImage() {
+    public MovieModel(String title, String description, String date, String image) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -48,7 +55,7 @@ public class MovieModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.image);
+        dest.writeString(this.image);
         dest.writeString(this.title);
         dest.writeString(this.description);
         dest.writeString(this.date);
@@ -57,8 +64,8 @@ public class MovieModel implements Parcelable {
     public MovieModel() {
     }
 
-    protected MovieModel(Parcel in) {
-        this.image = in.readInt();
+    private MovieModel(Parcel in) {
+        this.image = in.readString();
         this.title = in.readString();
         this.description = in.readString();
         this.date = in.readString();

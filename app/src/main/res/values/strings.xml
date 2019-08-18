@@ -8,6 +8,8 @@
     <string name="language_setting">language setting</string>
     <string name="tab1">Movies</string>
     <string name="tab2">Tv Shows</string>
+    <string name="api_key">bda489bfab0d87f4b3c4af88e206e0a4</string>
+    <string name="api_access_token">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZGE0ODliZmFiMGQ4N2Y0YjNjNGFmODhlMjA2ZTBhNCIsInN1YiI6IjVkNGZjYjBjNDFlZWUxMDAxNTBmNDk0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._auQtj1R-FnCmL5qKMAvatnNWnZETFAl10Fd926up9o</string>
 
     <string-array name="movie_title">
         <item>Avenger Infinity War</item>

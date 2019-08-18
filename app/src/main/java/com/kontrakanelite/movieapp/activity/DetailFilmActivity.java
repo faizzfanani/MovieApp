@@ -34,7 +34,7 @@ public class DetailFilmActivity extends AppCompatActivity {
         title.setText(movie.getTitle());
         description.setText(movie.getDescription());
         releaseDate.setText(movie.getDate());
-        poster.setImageResource(movie.getImage());
+        //poster.setImageResource(movie.getImage());
 
         Objects.requireNonNull(this.getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);

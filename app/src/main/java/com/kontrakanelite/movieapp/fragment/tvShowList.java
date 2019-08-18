@@ -49,7 +49,7 @@ public class tvShowList extends Fragment {
                 movie.setTitle(dataTitle[i]);
                 movie.setDescription(dataDescription[i]);
                 movie.setDate(dataReleaseDate[i]);
-                movie.setImage(dataPhoto.getResourceId(i, 1));
+                //movie.setImage(dataPhoto.getResourceId(i, 1));
                 Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
                 moveWithObjectIntent.putExtra(DetailFilmActivity.MOVIE, movie);
                 startActivity(moveWithObjectIntent);
@@ -62,7 +62,7 @@ public class tvShowList extends Fragment {
         movies = new ArrayList<>();
         for (int i = 0; i < dataTitle.length; i++) {
             MovieModel movie = new MovieModel();
-            movie.setImage(dataPhoto.getResourceId(i, -1));
+            //movie.setImage(dataPhoto.getResourceId(i, -1));
             movie.setTitle(dataTitle[i]);
             movie.setDescription(dataDescription[i]);
             movie.setDate(dataReleaseDate[i]);

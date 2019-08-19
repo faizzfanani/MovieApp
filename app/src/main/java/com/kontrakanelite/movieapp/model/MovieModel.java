@@ -17,7 +17,7 @@ public class MovieModel implements Parcelable {
     }
 
     public String getImage() {
-        return image;
+        return "https://image.tmdb.org/t/p/w185/"+image;
     }
 
     public void setImage(String image) {

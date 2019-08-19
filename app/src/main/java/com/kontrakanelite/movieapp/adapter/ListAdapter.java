@@ -53,7 +53,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         viewHolder.title.setText(movie.getTitle());
         viewHolder.description.setText(movie.getDescription());
         viewHolder.releaseDate.setText(movie.getDate());
-        //Glide.with(context).load(movie.getImage()).override(500,500).into(viewHolder.poster);
+        Glide.with(context).load(movie.getImage()).override(500,500).into(viewHolder.poster);
     }
 
     @Override

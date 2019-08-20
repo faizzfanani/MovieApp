@@ -26,13 +26,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
-    public ListAdapter(Context context) {
-        this.context = context;
-        movies = new ArrayList<>();
-    }
-    public void setMovies(ArrayList<MovieModel> movies) {
-        this.movies = movies;
-    }
+
     private ArrayList<MovieModel> getShow() {
         return movies;
     }

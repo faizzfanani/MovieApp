@@ -1,6 +1,5 @@
 package com.kontrakanelite.movieapp.activity;
 
-import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
-
-import java.util.Objects;
 
 public class DetailFilmActivity extends AppCompatActivity {
     String id;

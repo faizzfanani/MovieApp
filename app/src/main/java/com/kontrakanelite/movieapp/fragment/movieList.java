@@ -33,7 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class movieList extends Fragment {
-    private static final String URL_DATA = "https://api.themoviedb.org/3/discover/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4";
+    private static final String URL_DATA = "https://api.themoviedb.org/3/discover/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US";
 
     private ArrayList<MovieModel> movieModels;
     private RecyclerView recyclerView;
@@ -89,6 +89,7 @@ public class movieList extends Fragment {
                                 movieModels.add(new MovieModel(
                                         movie.getString("title"),
                                         movie.getString("overview"),
+                                        movie.getString("vote_average"),
                                         movie.getString("release_date"),
                                         movie.getString("poster_path")
                                 ));

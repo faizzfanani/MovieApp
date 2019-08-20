@@ -7,17 +7,27 @@ public class MovieModel implements Parcelable {
     private String image;
     private String title;
     private String description;
+    private String vote;
     private String date;
 
-    public MovieModel(String title, String description, String date, String image) {
+    public MovieModel(String title, String description, String vote, String date, String image) {
         this.image = image;
         this.title = title;
         this.description = description;
+        this.vote = vote;
         this.date = date;
     }
 
     public String getImage() {
         return "https://image.tmdb.org/t/p/w185/"+image;
+    }
+
+    public String getVote() {
+        return vote;
+    }
+
+    public void setVote(String vote) {
+        this.vote = vote;
     }
 
     public void setImage(String image) {
@@ -59,6 +69,7 @@ public class MovieModel implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.description);
         dest.writeString(this.date);
+        dest.writeString(this.vote);
     }
 
     public MovieModel() {
@@ -69,6 +80,7 @@ public class MovieModel implements Parcelable {
         this.title = in.readString();
         this.description = in.readString();
         this.date = in.readString();
+        this.vote = in.readString();
     }
 
     public static final Parcelable.Creator<MovieModel> CREATOR = new Parcelable.Creator<MovieModel>() {

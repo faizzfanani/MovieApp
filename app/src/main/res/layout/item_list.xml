@@ -50,7 +50,29 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_releaseDate" />
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@id/image_container"
+                app:layout_constraintBottom_toBottomOf="parent">
 
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_star" />
+
+                <TextView
+                    android:id="@+id/tv_vote"
+                    style="@style/text_title"
+                    android:textSize="12sp"
+                    android:layout_margin="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
             <TextView
                 android:id="@+id/readmore"
                 style="@style/text_release_date"

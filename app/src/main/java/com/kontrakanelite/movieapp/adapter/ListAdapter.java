@@ -53,6 +53,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         viewHolder.title.setText(movie.getTitle());
         viewHolder.description.setText(movie.getDescription());
         viewHolder.releaseDate.setText(movie.getDate());
+        viewHolder.vote.setText(movie.getVote());
         Glide.with(context).load(movie.getImage()).override(500,500).into(viewHolder.poster);
     }
 
@@ -65,6 +66,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         private TextView title;
         private TextView description;
         private TextView releaseDate;
+        private TextView vote;
         private ImageView poster;
 
         ViewHolder(@NonNull View view) {
@@ -72,6 +74,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             title = view.findViewById(R.id.tv_title);
             description = view.findViewById(R.id.tv_description);
             releaseDate = view.findViewById(R.id.tv_releaseDate);
+            vote = view.findViewById(R.id.tv_vote);
             poster = view.findViewById(R.id.iv_poster);
         }
     }

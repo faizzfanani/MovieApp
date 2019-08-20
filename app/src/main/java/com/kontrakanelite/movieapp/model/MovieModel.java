@@ -5,21 +5,31 @@ import android.os.Parcelable;
 
 public class MovieModel implements Parcelable {
     private String image;
+    private String id;
     private String title;
     private String description;
     private String vote;
     private String date;
 
-    public MovieModel(String title, String description, String vote, String date, String image) {
+    public MovieModel(String id, String title, String description, String vote, String date, String image) {
         this.image = image;
+        this.id = id;
         this.title = title;
         this.description = description;
         this.vote = vote;
         this.date = date;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getImage() {
-        return "https://image.tmdb.org/t/p/w185/"+image;
+        return "https://image.tmdb.org/t/p/w780/"+image;
     }
 
     public String getVote() {

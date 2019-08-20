@@ -37,8 +37,8 @@ public class movieList extends Fragment {
 
     private ArrayList<MovieModel> movieModels;
     private RecyclerView recyclerView;
-    public ListAdapter movieAdapter;
-    String[]dataTitle, dataDescription, dataReleaseDate, dataPhoto;
+    //public ListAdapter movieAdapter;
+    String[] dataId, dataTitle, dataDescription, dataReleaseDate, dataVote, dataPhoto;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -48,24 +48,26 @@ public class movieList extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         movieModels = new ArrayList<>();
-        movieAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
+        //movieAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
 
         loadProducts();
 
-//        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-//            @Override
-//            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
-//                Toast.makeText(getContext(), movieModels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
-//                MovieModel movie = new MovieModel();
-//                movie.setTitle(dataTitle[i]);
-//                movie.setDescription(dataDescription[i]);
-//                movie.setDate(dataReleaseDate[i]);
-//                movie.setImage(dataPhoto[i]);
-//                Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
-//                moveWithObjectIntent.putExtra(DetailFilmActivity.MOVIE, movie);
-//                startActivity(moveWithObjectIntent);
-//            }
-//        });
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
+                Toast.makeText(getContext(), movieModels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+                MovieModel movie = new MovieModel();
+                movie.setId(dataId[i]);
+                movie.setTitle(dataTitle[i]);
+                movie.setDescription(dataDescription[i]);
+                movie.setVote(dataVote[i]);
+                movie.setDate(dataReleaseDate[i]);
+                movie.setImage(dataPhoto[i]);
+                Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
+                moveWithObjectIntent.putExtra(DetailFilmActivity.MOVIE, movie);
+                startActivity(moveWithObjectIntent);
+            }
+        });
         
         return rootView;
     }
@@ -81,22 +83,30 @@ public class movieList extends Fragment {
                         progressDialog.dismiss();
                         try {
                             JSONArray jsonArray = response.optJSONArray("results");
+                                dataId = new String[jsonArray.length()];
+                                dataTitle = new String[jsonArray.length()];
+                                dataDescription = new String[jsonArray.length()];
+                                dataVote = new String[jsonArray.length()];
+                                dataReleaseDate = new String[jsonArray.length()];
+                                dataPhoto = new String[jsonArray.length()];
 
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject movie = jsonArray.optJSONObject(i);
-
+                                    dataId[i] = movie.getString("id");
+                                    dataTitle[i] = movie.getString("title");
+                                    dataDescription[i] = movie.getString("overview");
+                                    dataVote[i] = movie.getString("vote_average");
+                                    dataReleaseDate[i] = movie.getString("release_date");
+                                    dataPhoto[i] = movie.getString("poster_path");
                                 movieModels.add(new MovieModel(
-                                        movie.getString("title"),
-                                        movie.getString("overview"),
-                                        movie.getString("vote_average"),
-                                        movie.getString("release_date"),
-                                        movie.getString("poster_path")
+                                        dataId[i],
+                                        dataTitle[i],
+                                        dataDescription[i],
+                                        dataVote[i],
+                                        dataReleaseDate[i],
+                                        dataPhoto[i]
                                 ));
-//                                dataTitle[i] = movie.getString("title");
-//                                dataDescription[i] = movie.getString("overview");
-//                                dataReleaseDate[i] = movie.getString("release_date");
-//                                dataPhoto[i] = movie.getString("poster_path");
                             }
 
                             ListAdapter adapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
@@ -118,6 +128,5 @@ public class movieList extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         requestQueue.add(objectRequest);
-
     }
 }

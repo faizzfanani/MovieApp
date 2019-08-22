@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,18 +36,17 @@ public class tvShowList extends Fragment {
     private static final String URL_DATA = "https://api.themoviedb.org/3/discover/tv?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US";
     String[] dataId, dataTitle, dataDescription, dataReleaseDate, dataVote, dataPhoto;
     RecyclerView recyclerView;
-
-    //private ListAdapter movieAdapter;
     private ArrayList<MovieModel> movieModels;
+    ListAdapter adapter;
+    ProgressDialog progressDialog;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle state) {
         View rootView = inflater.inflate(R.layout.fragment_tv_show_list, container, false);
 
         recyclerView = rootView.findViewById(R.id.rv_tvshows);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         movieModels = new ArrayList<>();
-        //movieAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
 
         loadShow();
 
@@ -69,9 +69,26 @@ public class tvShowList extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle state) {
+        state.putParcelableArrayList("tvList", movieModels);
+        super.onSaveInstanceState(state);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            movieModels = savedInstanceState.getParcelableArrayList("tvList");
+            ListAdapter newAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
+            recyclerView.setAdapter(newAdapter);
+            progressDialog.dismiss();
+        }
+    }
     private void loadShow() {
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading Data..");
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.loading_indicator));
         progressDialog.show();
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL_DATA, null, new Response.Listener
@@ -107,7 +124,7 @@ public class tvShowList extends Fragment {
                         ));
                     }
 
-                    ListAdapter adapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
+                    adapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -120,7 +137,7 @@ public class tvShowList extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-
+                        Toast.makeText(getContext(), getText(R.string.error_message), Toast.LENGTH_SHORT).show();
                     }
                 });
 

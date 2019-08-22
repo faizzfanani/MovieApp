@@ -16,6 +16,7 @@ import com.kontrakanelite.movieapp.fragment.tvShowList;
 
 public class MainActivity extends AppCompatActivity {
     public TabAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

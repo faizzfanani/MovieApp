@@ -3,6 +3,7 @@ package com.kontrakanelite.movieapp.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,13 +35,13 @@ import org.json.JSONObject;
 
 public class movieList extends Fragment {
     private static final String URL_DATA = "https://api.themoviedb.org/3/discover/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US";
-
     private ArrayList<MovieModel> movieModels;
     private RecyclerView recyclerView;
-    //public ListAdapter movieAdapter;
+    ListAdapter adapter;
+    ProgressDialog progressDialog;
     String[] dataId, dataTitle, dataDescription, dataReleaseDate, dataVote, dataPhoto;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle state) {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
@@ -48,7 +49,6 @@ public class movieList extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         movieModels = new ArrayList<>();
-        //movieAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
 
         loadProducts();
 
@@ -71,9 +71,26 @@ public class movieList extends Fragment {
         
         return rootView;
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle state) {
+        state.putParcelableArrayList("movieList", movieModels);
+        super.onSaveInstanceState(state);
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            movieModels = savedInstanceState.getParcelableArrayList("movieList");
+            ListAdapter newAdapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
+            recyclerView.setAdapter(newAdapter);
+            progressDialog.dismiss();
+        }
+    }
+
     private void loadProducts() {
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading Data..");
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.loading_indicator));
         progressDialog.show();
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL_DATA, null, new Response.Listener
@@ -109,7 +126,7 @@ public class movieList extends Fragment {
                                 ));
                             }
 
-                            ListAdapter adapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
+                            adapter = new ListAdapter(Objects.requireNonNull(getContext()), movieModels);
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

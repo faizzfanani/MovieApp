@@ -10,6 +10,7 @@ public class MovieModel implements Parcelable {
     private String description;
     private String vote;
     private String date;
+    private int ID;
 
     public MovieModel(String id, String title, String description, String vote, String date, String image) {
         this.image = image;
@@ -18,6 +19,14 @@ public class MovieModel implements Parcelable {
         this.description = description;
         this.vote = vote;
         this.date = date;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getId() {

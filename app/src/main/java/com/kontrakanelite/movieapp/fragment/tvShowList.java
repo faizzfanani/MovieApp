@@ -61,8 +61,10 @@ public class tvShowList extends Fragment {
                 movie.setVote(dataVote[i]);
                 movie.setDate(dataReleaseDate[i]);
                 movie.setImage(dataPhoto[i]);
+                String type = "tvshow";
                 Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
                 moveWithObjectIntent.putExtra(DetailFilmActivity.MOVIE, movie);
+                moveWithObjectIntent.putExtra("type", type);
                 startActivity(moveWithObjectIntent);
             }
         });

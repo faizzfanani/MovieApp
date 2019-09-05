@@ -69,8 +69,8 @@ public class DetailFilmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(type.equals("movie")){
-                    if(!dataExist(id)){
-                    favoriteMovie();}
+                    //if(!dataExist(id))
+                    favoriteMovie();
                 }else if(type.equals("tvshow")){
                     favoriteTvShow();
                 }

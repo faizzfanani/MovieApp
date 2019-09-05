@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.kontrakanelite.movieapp.R;
-import com.kontrakanelite.movieapp.adapter.FavoriteAdapter;
+import com.kontrakanelite.movieapp.adapter.MovieFavoriteAdapter;
 import com.kontrakanelite.movieapp.database.MovieHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class FavoriteMovieActivity extends AppCompatActivity {
     MovieHelper movieHelper;
-    FavoriteAdapter adapter;
+    MovieFavoriteAdapter adapter;
     ArrayList<MovieModel>movieModel;
     RecyclerView recyclerView;
     @Override
@@ -22,9 +22,8 @@ public class FavoriteMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movie);
         movieHelper = new MovieHelper(getApplicationContext());
-        //movieModel = new ArrayList<>();
-        adapter = new FavoriteAdapter(getApplicationContext());
-        recyclerView = findViewById(R.id.rv_favorite);
+        adapter = new MovieFavoriteAdapter(getApplicationContext());
+        recyclerView = findViewById(R.id.movie_favorite);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setHasFixedSize(true);
 

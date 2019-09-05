@@ -12,22 +12,23 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kontrakanelite.movieapp.R;
-import com.kontrakanelite.movieapp.database.MovieHelper;
+import com.kontrakanelite.movieapp.database.TvShowHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
 
 import java.util.ArrayList;
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CustomViewHolder> {
+
+public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.CustomViewHolder> {
 
     private LayoutInflater mInflater;
     private ArrayList<MovieModel> movie;
     private Context context;
-    private MovieHelper movieHelper;
+    private TvShowHelper tvHelper;
 
 
-    public FavoriteAdapter(Context context) {
+    public TvFavoriteAdapter(Context context) {
         this.context = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        movieHelper = new MovieHelper(context);
+        tvHelper = new TvShowHelper(context);
     }
 
     @NonNull
@@ -69,9 +70,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Custom
 
     private void deleteitem(int id) {
 
-        movieHelper.open();
-        movieHelper.delete(id);
-        movieHelper.close();
+        tvHelper.open();
+        tvHelper.delete(id);
+        tvHelper.close();
 
         Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
 

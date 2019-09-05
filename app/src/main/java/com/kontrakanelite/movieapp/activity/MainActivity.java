@@ -40,14 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView btnFavorite = findViewById(R.id.iv_favorite);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FavoriteMovieActivity.class);
-                startActivity(intent);
-            }
-        });
     }
     @Override
     public void onBackPressed() {

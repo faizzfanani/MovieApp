@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
         final String description = movie.get(position).getDescription();
         final String vote = movie.get(position).getVote();
         final String date = movie.get(position).getDate();
-        final String poster = movie.get(position).getImage();
+        final String poster = movie.get(position).getPosterPath();
 
         holder.title.setText(title);
         holder.description.setText(description);

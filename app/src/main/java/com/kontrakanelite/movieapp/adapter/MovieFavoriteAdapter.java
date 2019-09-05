@@ -47,7 +47,7 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
         final String description = movie.get(position).getDescription();
         final String vote = movie.get(position).getVote();
         final String date = movie.get(position).getDate();
-        final String poster = movie.get(position).getImage();
+        final String poster = movie.get(position).getPosterPath();
 
         holder.title.setText(title);
         holder.description.setText(description);

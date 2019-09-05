@@ -84,6 +84,7 @@ public class MovieModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.image);
         dest.writeString(this.title);
         dest.writeString(this.description);
@@ -95,6 +96,7 @@ public class MovieModel implements Parcelable {
     }
 
     private MovieModel(Parcel in) {
+        this.id = in.readString();
         this.image = in.readString();
         this.title = in.readString();
         this.description = in.readString();

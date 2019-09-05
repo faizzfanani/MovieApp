@@ -1,5 +1,7 @@
 package com.kontrakanelite.movieapp.activity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,8 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.kontrakanelite.movieapp.database.DatabaseHelper;
 import com.kontrakanelite.movieapp.database.MovieHelper;
 import com.kontrakanelite.movieapp.database.TvShowHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
@@ -23,6 +27,8 @@ public class DetailFilmActivity extends AppCompatActivity {
     public static final String MOVIE = "pilem";
     MovieHelper movieHelper;
     TvShowHelper tvShowHelper;
+    SQLiteDatabase database;
+    private DatabaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,7 @@ public class DetailFilmActivity extends AppCompatActivity {
 
         movieHelper = new MovieHelper(getApplicationContext());
         tvShowHelper = new TvShowHelper(getApplicationContext());
+        dataBaseHelper = new DatabaseHelper(getApplicationContext());
 
         title = findViewById(R.id.detail_title);
         description = findViewById(R.id.detail_description);
@@ -62,7 +69,8 @@ public class DetailFilmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(type.equals("movie")){
-                    favoriteMovie();
+                    if(!dataExist(id)){
+                    favoriteMovie();}
                 }else if(type.equals("tvshow")){
                     favoriteTvShow();
                 }
@@ -93,6 +101,21 @@ public class DetailFilmActivity extends AppCompatActivity {
                 posterSource);
         tvShowHelper.insert(movie);
         tvShowHelper.close();
+    }
+    public boolean dataExist(String id) {
+        database = dataBaseHelper.getWritableDatabase();
+        String sql = "SELECT EXISTS (SELECT * FROM TABLE_MOVIE WHERE MOVIE_ID='"+id+"' LIMIT 1)";
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        if (cursor.getInt(0) == 1) {
+            cursor.close();
+            Toast.makeText(getApplicationContext(), "data sudah ada", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
     }
 
     @Override

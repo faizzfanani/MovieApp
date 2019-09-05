@@ -27,22 +27,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     public static String CREATE_TABLE_MOVIE = "create table " + TABLE_MOVIE +
             " (" + _ID + " integer primary key autoincrement, " +
-            MOVIE_ID + " text not null, " +
-            MOVIE_TITLE + " text not null, " +
-            MOVIE_DESCRIPTION + " text not null, "+
-            MOVIE_VOTE + " text not null, " +
-            MOVIE_DATE + " text not null, "+
-            MOVIE_POSTER + " text not null );";
+            MOVIE_ID + " varchar(50) not null, " +
+            MOVIE_TITLE + " varchar(50) not null, " +
+            MOVIE_DESCRIPTION + " varchar(255) not null, "+
+            MOVIE_VOTE + " varchar(50) not null, " +
+            MOVIE_DATE + " varchar(50) not null, "+
+            MOVIE_POSTER + " varchar(255) not null );";
     public static String CREATE_TABLE_TV_SHOW = "create table " + TABLE_TV_SHOW +
             " (" + _ID + " integer primary key autoincrement, " +
-            TV_ID + " text not null, " +
-            TV_TITLE + " text not null, " +
-            TV_DESCRIPTION + " text not null, "+
-            TV_VOTE + " text not null, " +
-            TV_DATE + " text not null, "+
-            TV_POSTER + " text not null );";
+            TV_ID + " varchar(50) not null, " +
+            TV_TITLE + " varchar(50) not null, " +
+            TV_DESCRIPTION + " varchar(255) not null, "+
+            TV_VOTE + " varchar(50) not null, " +
+            TV_DATE + " varchar(50) not null, "+
+            TV_POSTER + " varchar(255) not null );";
 
-    private static String DATABASE_NAME = "favorite";
+    private static String DATABASE_NAME = "favorite.db";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

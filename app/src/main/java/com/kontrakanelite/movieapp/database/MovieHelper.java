@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.kontrakanelite.movieapp.model.MovieModel;
 
@@ -71,20 +72,9 @@ public class MovieHelper {
         initialValues.put(MOVIE_VOTE, movieModel.getVote());
         initialValues.put(MOVIE_DATE, movieModel.getDate());
         initialValues.put(MOVIE_POSTER, movieModel.getImage());
-
-        return database.insert(TABLE_MOVIE, null, initialValues);
-    }
-
-    public int update(MovieModel movieModel) {
-        ContentValues args = new ContentValues();
-        args.put(MOVIE_ID, movieModel.getId());
-        args.put(MOVIE_TITLE, movieModel.getTitle());
-        args.put(MOVIE_DESCRIPTION, movieModel.getDescription());
-        args.put(MOVIE_VOTE, movieModel.getVote());
-        args.put(MOVIE_DATE, movieModel.getDate());
-        args.put(MOVIE_POSTER, movieModel.getImage());
-
-        return database.update(TABLE_MOVIE, args, _ID + "= '" + movieModel.getID() + "'", null);
+        long result = database.insert(TABLE_MOVIE, null, initialValues);
+        Toast.makeText(context, result+"", Toast.LENGTH_SHORT).show();
+        return result;
     }
 
     public int delete(int id) {

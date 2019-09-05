@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.kontrakanelite.movieapp.R;
 import com.kontrakanelite.movieapp.adapter.FavoriteAdapter;
-import com.kontrakanelite.movieapp.adapter.ListAdapter;
 import com.kontrakanelite.movieapp.database.MovieHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
 
@@ -23,7 +22,7 @@ public class FavoriteMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movie);
         movieHelper = new MovieHelper(getApplicationContext());
-        movieModel = new ArrayList<>();
+        //movieModel = new ArrayList<>();
         adapter = new FavoriteAdapter(getApplicationContext());
         recyclerView = findViewById(R.id.rv_favorite);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -33,9 +32,9 @@ public class FavoriteMovieActivity extends AppCompatActivity {
     }
     private void getAllData() {
         movieHelper.open();
-        ArrayList<MovieModel> movie = movieHelper.getAllData();
+        movieModel = movieHelper.getAllData();
         movieHelper.close();
-        adapter.addItem(movie);
+        adapter.addItem(movieModel);
         recyclerView.setAdapter(adapter);
     }
     @Override

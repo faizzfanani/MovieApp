@@ -62,6 +62,10 @@ public class DetailFilmActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(posterSource).override(780,780).into(poster);
         type = getIntent().getStringExtra("type");
 
+        if(type.equals("movie"))
+            movieExist(id);
+        if(type.equals("tvshow"))
+            tvExist(id);
         ImageView actionBack = findViewById(R.id.detail_back);
 
         actionBack.setOnClickListener(new View.OnClickListener() {
@@ -73,10 +77,17 @@ public class DetailFilmActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(type.equals("movie")){
-                    movieExist(id);
+                if(movieExist(id) || tvExist(id)){
+                    Toast.makeText(getApplicationContext(), R.string.data_already_exist, Toast.LENGTH_SHORT).show();
+                }
+                else if(type.equals("movie")){
+                    if(!movieExist(id)){
+                        favoriteMovie();
+                        btnFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_fill));}
                 }else if(type.equals("tvshow")){
-                    tvExist(id);
+                    if (!tvExist(id)){
+                        favoriteTvShow();
+                        btnFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_fill));}
                 }
             }
         });
@@ -106,33 +117,35 @@ public class DetailFilmActivity extends AppCompatActivity {
         tvShowHelper.insert(movie);
         tvShowHelper.close();
     }
-    public void movieExist(String id) {
+    public boolean movieExist(String id) {
         database = dataBaseHelper.getWritableDatabase();
         Cursor cursor;
         String sql ="SELECT * FROM "+TABLE_MOVIE+" WHERE "+ MOVIE_ID +"="+id;
         cursor= database.rawQuery(sql,null);
 
         if(cursor.getCount()>0){
-            btnFavorite.setImageResource(R.drawable.ic_favorite_fill);
-            Toast.makeText(getApplicationContext(), R.string.data_already_exist, Toast.LENGTH_SHORT).show();
+            btnFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_fill));
+            cursor.close();
+            return true;
         }else{
-            favoriteMovie();
+            cursor.close();
+            return false;
         }
-        cursor.close();
     }
-    public void tvExist(String id) {
+    public boolean tvExist(String id) {
         database = dataBaseHelper.getWritableDatabase();
         Cursor cursor;
         String sql ="SELECT * FROM "+TABLE_TV_SHOW+" WHERE "+ TV_ID +"="+id;
         cursor= database.rawQuery(sql,null);
 
         if(cursor.getCount()>0){
-            btnFavorite.setImageResource(R.drawable.ic_favorite_fill);
-            Toast.makeText(getApplicationContext(), R.string.data_already_exist, Toast.LENGTH_SHORT).show();
+            btnFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_fill));
+            cursor.close();
+            return true;
         }else{
-            favoriteTvShow();
+            cursor.close();
+            return false;
         }
-        cursor.close();
     }
 
     @Override

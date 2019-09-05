@@ -84,7 +84,7 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
         notifyDataSetChanged();
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    class CustomViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView description;
@@ -92,7 +92,7 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
         private TextView vote;
         private ImageView poster, btnDelete;
 
-        public CustomViewHolder(View itemView) {
+        CustomViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.tv_title);

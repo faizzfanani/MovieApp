@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
+import com.kontrakanelite.movieapp.R;
 import com.kontrakanelite.movieapp.model.MovieModel;
 
 import java.util.ArrayList;
@@ -71,7 +73,7 @@ public class TvShowHelper {
         initialValues.put(TV_VOTE, movieModel.getVote());
         initialValues.put(TV_DATE, movieModel.getDate());
         initialValues.put(TV_POSTER, movieModel.getImage());
-
+        Toast.makeText(context, R.string.add_favorite_success, Toast.LENGTH_SHORT).show();
         return database.insert(TABLE_TV_SHOW, null, initialValues);
     }
 

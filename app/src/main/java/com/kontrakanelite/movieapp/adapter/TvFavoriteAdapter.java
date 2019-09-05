@@ -1,5 +1,6 @@
 package com.kontrakanelite.movieapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -35,15 +36,14 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View v = inflater.inflate(R.layout.item_list, viewGroup, false);
+        View v = inflater.inflate(R.layout.item_favorite, viewGroup, false);
         CustomViewHolder vh = new CustomViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final CustomViewHolder holder, final int position) {
+    public void onBindViewHolder(final CustomViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
-        final String id = movie.get(position).getId();
         final String title = movie.get(position).getTitle();
         final String description = movie.get(position).getDescription();
         final String vote = movie.get(position).getVote();
@@ -56,25 +56,21 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
         holder.releaseDate.setText(date);
         Glide.with(context).load(poster).override(500,500).into(holder.poster);
 
-//        holder.btndelete.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                deleteitem(movie.get(position).getId());
-//                movie.remove(position);
-//                notifyDataSetChanged();
-//
-//            }
-//        });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteitem(movie.get(position).getID());
+                movie.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     private void deleteitem(int id) {
-
         tvHelper.open();
         tvHelper.delete(id);
         tvHelper.close();
-
-        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -94,7 +90,7 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
         private TextView description;
         private TextView releaseDate;
         private TextView vote;
-        private ImageView poster;
+        private ImageView poster, btnDelete;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -104,6 +100,7 @@ public class TvFavoriteAdapter extends RecyclerView.Adapter<TvFavoriteAdapter.Cu
             releaseDate = itemView.findViewById(R.id.tv_releaseDate);
             vote = itemView.findViewById(R.id.tv_vote);
             poster = itemView.findViewById(R.id.iv_poster);
+            btnDelete = itemView.findViewById(R.id.delete_favorite);
         }
 
     }

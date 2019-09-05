@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import static com.kontrakanelite.movieapp.database.DatabaseContract.TABLE_MOVIE;
+import static com.kontrakanelite.movieapp.database.DatabaseContract.MovieColumns.MOVIE_ID;
+import static com.kontrakanelite.movieapp.database.DatabaseContract.TABLE_TV_SHOW;
+import static com.kontrakanelite.movieapp.database.DatabaseContract.TvShowColumns.TV_ID;
 
 import com.bumptech.glide.Glide;
 import com.kontrakanelite.movieapp.database.DatabaseHelper;
@@ -19,7 +23,7 @@ import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
 
 public class DetailFilmActivity extends AppCompatActivity {
-    String id, posterSource, type;
+    String id, posterSource, type, posterPath;
     TextView title, description, vote, releaseDate;
     ImageView poster;
     ScrollView scrollView;
@@ -54,6 +58,7 @@ public class DetailFilmActivity extends AppCompatActivity {
         vote.setText(movie.getVote());
         releaseDate.setText(movie.getDate());
         posterSource = movie.getImage();
+        posterPath = movie.getPosterPath();
         Glide.with(getApplicationContext()).load(posterSource).override(780,780).into(poster);
         type = getIntent().getStringExtra("type");
 
@@ -69,10 +74,9 @@ public class DetailFilmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(type.equals("movie")){
-                    //if(!dataExist(id))
-                    favoriteMovie();
+                    movieExist(id);
                 }else if(type.equals("tvshow")){
-                    favoriteTvShow();
+                    tvExist(id);
                 }
             }
         });
@@ -85,7 +89,7 @@ public class DetailFilmActivity extends AppCompatActivity {
                 description.getText().toString(),
                 vote.getText().toString(),
                 releaseDate.getText().toString(),
-                posterSource);
+                posterPath);
         movieHelper.insert(movie);
         movieHelper.close();
     }
@@ -98,24 +102,37 @@ public class DetailFilmActivity extends AppCompatActivity {
                 description.getText().toString(),
                 vote.getText().toString(),
                 releaseDate.getText().toString(),
-                posterSource);
+                posterPath);
         tvShowHelper.insert(movie);
         tvShowHelper.close();
     }
-    public boolean dataExist(String id) {
+    public void movieExist(String id) {
         database = dataBaseHelper.getWritableDatabase();
-        String sql = "SELECT EXISTS (SELECT * FROM TABLE_MOVIE WHERE MOVIE_ID='"+id+"' LIMIT 1)";
-        Cursor cursor = database.rawQuery(sql, null);
-        cursor.moveToFirst();
+        Cursor cursor;
+        String sql ="SELECT * FROM "+TABLE_MOVIE+" WHERE "+ MOVIE_ID +"="+id;
+        cursor= database.rawQuery(sql,null);
 
-        if (cursor.getInt(0) == 1) {
-            cursor.close();
-            Toast.makeText(getApplicationContext(), "data sudah ada", Toast.LENGTH_SHORT).show();
-            return true;
-        } else {
-            cursor.close();
-            return false;
+        if(cursor.getCount()>0){
+            btnFavorite.setImageResource(R.drawable.ic_favorite_fill);
+            Toast.makeText(getApplicationContext(), R.string.data_already_exist, Toast.LENGTH_SHORT).show();
+        }else{
+            favoriteMovie();
         }
+        cursor.close();
+    }
+    public void tvExist(String id) {
+        database = dataBaseHelper.getWritableDatabase();
+        Cursor cursor;
+        String sql ="SELECT * FROM "+TABLE_TV_SHOW+" WHERE "+ TV_ID +"="+id;
+        cursor= database.rawQuery(sql,null);
+
+        if(cursor.getCount()>0){
+            btnFavorite.setImageResource(R.drawable.ic_favorite_fill);
+            Toast.makeText(getApplicationContext(), R.string.data_already_exist, Toast.LENGTH_SHORT).show();
+        }else{
+            favoriteTvShow();
+        }
+        cursor.close();
     }
 
     @Override

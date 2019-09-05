@@ -12,4 +12,9 @@
     <string name="api_access_token">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZGE0ODliZmFiMGQ4N2Y0YjNjNGFmODhlMjA2ZTBhNCIsInN1YiI6IjVkNGZjYjBjNDFlZWUxMDAxNTBmNDk0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._auQtj1R-FnCmL5qKMAvatnNWnZETFAl10Fd926up9o</string>
     <string name="loading_indicator">Loading data..</string>
     <string name="error_message">Failed to laod data..</string>
+    <string name="data_already_exist">data already exists</string>
+    <string name="add_favorite_success">added to favorite</string>
+    <string name="favorite_movie">Favorite movies</string>
+    <string name="favorite_tv">Favorite tv shows</string>
+    <string name="deleted">deleted</string>
 </resources>

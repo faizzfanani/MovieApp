@@ -41,6 +41,8 @@ public class MovieModel implements Parcelable {
         return "https://image.tmdb.org/t/p/w780/"+image;
     }
 
+    public String getPosterPath(){return image;}
+
     public String getVote() {
         return vote;
     }

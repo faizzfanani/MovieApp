@@ -12,4 +12,9 @@
     <string name="api_access_token">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZGE0ODliZmFiMGQ4N2Y0YjNjNGFmODhlMjA2ZTBhNCIsInN1YiI6IjVkNGZjYjBjNDFlZWUxMDAxNTBmNDk0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._auQtj1R-FnCmL5qKMAvatnNWnZETFAl10Fd926up9o</string>
     <string name="loading_indicator">Memuat data..</string>
     <string name="error_message">Gagal memuat data..</string>
+    <string name="data_already_exist">data sudah ada</string>
+    <string name="add_favorite_success">berhasil ditambahkan ke favorit</string>
+    <string name="favorite_movie">Film favorit</string>
+    <string name="favorite_tv">Tayangan Tv favorit</string>
+    <string name="deleted">berhasil dihapus</string>
 </resources>

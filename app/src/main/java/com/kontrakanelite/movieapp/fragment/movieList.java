@@ -1,5 +1,7 @@
 package com.kontrakanelite.movieapp.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.kontrakanelite.movieapp.ItemClickSupport;
 import com.kontrakanelite.movieapp.activity.DetailFilmActivity;
 import com.kontrakanelite.movieapp.activity.FavoriteMovieActivity;
+import com.kontrakanelite.movieapp.activity.SearchResultActivity;
 import com.kontrakanelite.movieapp.adapter.ListAdapter;
 import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import android.app.ProgressDialog;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,9 +39,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class movieList extends Fragment {
+public class movieList extends Fragment{
     private static final String URL_DATA = "https://api.themoviedb.org/3/discover/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US";
+
     private ArrayList<MovieModel> movieModels;
+    Context context;
+    Activity activity;
     private RecyclerView recyclerView;
     ListAdapter adapter;
     ProgressDialog progressDialog;
@@ -48,11 +55,33 @@ public class movieList extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
+        context = getContext();
+        activity = getActivity();
         recyclerView = rootView.findViewById(R.id.rv_movie);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         movieModels = new ArrayList<>();
         btnFavorite = rootView.findViewById(R.id.link_favorite_movie);
+        SearchView searchView = rootView.findViewById(R.id.sv_movie);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+                intent.putExtra("query", query);
+                intent.putExtra("type","movie");
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        loadProducts();
+
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,8 +89,6 @@ public class movieList extends Fragment {
                 startActivity(intent);
             }
         });
-
-        loadProducts();
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override

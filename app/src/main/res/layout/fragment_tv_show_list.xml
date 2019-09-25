@@ -3,10 +3,28 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black">
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="3dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+    <SearchView
+        android:id="@+id/sv_tvshows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:background="@color/light_grey"
+        android:queryBackground="@color/light_grey"
+        android:queryHint="@string/query_hint"/>
+    </android.support.v7.widget.CardView>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tvshows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/cardview"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:layout_centerInParent="true" />

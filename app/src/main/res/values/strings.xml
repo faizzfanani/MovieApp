@@ -17,4 +17,8 @@
     <string name="favorite_movie">Favorite movies</string>
     <string name="favorite_tv">Favorite tv shows</string>
     <string name="deleted">deleted</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="query_hint">Search here..</string>
+    <string name="query_result">Search results of</string>
 </resources>

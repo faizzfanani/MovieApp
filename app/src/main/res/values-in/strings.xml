@@ -17,4 +17,8 @@
     <string name="favorite_movie">Film favorit</string>
     <string name="favorite_tv">Tayangan Tv favorit</string>
     <string name="deleted">berhasil dihapus</string>
+    <string name="appwidget_text">CONTOH</string>
+    <string name="add_widget">Tambah widget</string>
+    <string name="query_hint">Cari disini..</string>
+    <string name="query_result">Hasil pencarian dari</string>
 </resources>

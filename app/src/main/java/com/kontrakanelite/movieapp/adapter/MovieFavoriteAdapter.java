@@ -19,7 +19,7 @@ import com.kontrakanelite.movieapp.model.MovieModel;
 import java.util.ArrayList;
 public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.CustomViewHolder> {
 
-    private LayoutInflater mInflater;
+    //private LayoutInflater mInflater;
     private ArrayList<MovieModel> movie;
     private Context context;
     private MovieHelper movieHelper;
@@ -27,7 +27,7 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
 
     public MovieFavoriteAdapter(Context context) {
         this.context = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         movieHelper = new MovieHelper(context);
     }
 
@@ -36,8 +36,8 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View v = inflater.inflate(R.layout.item_favorite, viewGroup, false);
-        CustomViewHolder vh = new CustomViewHolder(v);
-        return vh;
+        //CustomViewHolder vh =
+        return new CustomViewHolder(v);
     }
 
     @Override

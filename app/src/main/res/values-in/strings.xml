@@ -23,4 +23,5 @@
     <string name="query_result">Hasil pencarian dari</string>
     <string name="daily_reminder">notifikasi harian</string>
     <string name="new_release">notifikasi rilis terbaru</string>
+    <string name="empty_fav">Favorit masih kosong</string>
 </resources>

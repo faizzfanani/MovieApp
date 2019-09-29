@@ -29,13 +29,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_key),MODE_PRIVATE);
         alarmReceiver = new AlarmReceiver();
 
-//        if (String.valueOf(getResources().getConfiguration().locale).equals("en_US")){
-//            tvLanguageSetting.setCompoundDrawablesWithIntrinsicBounds(R.drawable.united_states, 0, 0, 0);
-//        }
-//        else if (String.valueOf(getResources().getConfiguration().locale).equals("in_ID")){
-//            tvLanguageSetting.setCompoundDrawablesWithIntrinsicBounds(R.drawable.indonesia, 0, 0, 0);
-//        }
-
         if (sharedPreferences.getBoolean(getString(R.string.daily_reminder_preference),false)){
             switchDailyReminder.setChecked(true);
         }
@@ -43,11 +36,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             switchReleaseTodayReminder.setChecked(true);
         }
 
-
         tvLanguageSetting.setOnClickListener(this);
         switchDailyReminder.setOnCheckedChangeListener(this);
         switchReleaseTodayReminder.setOnCheckedChangeListener(this);
-
     }
 
     @Override
@@ -71,7 +62,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.switchReleaseTodayReminder:
                 if (b){
-                    alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER,getString(R.string.release_reminder_time),"");
+                    alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER,"19:30","tes bro");
                 }
                 else {
                     alarmReceiver.cancelAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER);

@@ -1,11 +1,8 @@
 package com.kontrakanelite.movieapp.service;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -13,7 +10,6 @@ import com.kontrakanelite.movieapp.R;
 import com.kontrakanelite.movieapp.database.MovieHelper;
 import com.kontrakanelite.movieapp.database.TvShowHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
-import com.kontrakanelite.movieapp.widget.FavoriteWidget;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +43,6 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             try {
                 URL url = new URL(movie.getPosterPath());
                 bitmaps.add(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
-                Log.i("teswidget",movie.getPosterPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -57,7 +52,6 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             try {
                 URL url = new URL(tvShow.getPosterPath());
                 bitmaps.add(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
-                Log.i("teswidget",tvShow.getPosterPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -78,14 +72,9 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
-        rv.setImageViewBitmap(R.id.imageView, bitmaps.get(position));
-        Bundle extras = new Bundle();
-        extras.putInt(FavoriteWidget.EXTRA_ITEM, position);
-        Intent fillInIntent = new Intent();
-        fillInIntent.putExtras(extras);
-        rv.setOnClickFillInIntent(R.id.imageView, fillInIntent);
-        return rv;
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
+        views.setImageViewBitmap(R.id.imageView,bitmaps.get(position));
+        return views;
     }
 
     @Override

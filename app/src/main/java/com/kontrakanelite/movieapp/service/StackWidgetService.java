@@ -1,4 +1,4 @@
-package com.kontrakanelite.movieapp;
+package com.kontrakanelite.movieapp.service;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;

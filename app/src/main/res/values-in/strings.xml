@@ -21,4 +21,6 @@
     <string name="add_widget">Tambah widget</string>
     <string name="query_hint">Cari disini..</string>
     <string name="query_result">Hasil pencarian dari</string>
+    <string name="daily_reminder">notifikasi harian</string>
+    <string name="new_release">notifikasi rilis terbaru</string>
 </resources>

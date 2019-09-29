@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import com.kontrakanelite.movieapp.R;
@@ -25,9 +26,20 @@ public class MovieHelper {
     private Context context;
     private DatabaseHelper dataBaseHelper;
     private SQLiteDatabase database;
+    private static MovieHelper INSTANCE;
 
     public MovieHelper(Context context) {
         this.context = context;
+    }
+    public static MovieHelper getInstance(Context context) {
+        if (INSTANCE == null){
+            synchronized (SQLiteOpenHelper.class){
+                if (INSTANCE == null){
+                    INSTANCE = new MovieHelper(context);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public MovieHelper open() throws SQLException {
@@ -80,5 +92,37 @@ public class MovieHelper {
 
     public int delete(int id) {
         return database.delete(TABLE_MOVIE, _ID + " = '" + id + "'", null);
+    }
+
+    public Cursor queryByIdProvider(String id) {
+        return database.query(TABLE_MOVIE, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public Cursor queryProvider() {
+        return database.query(TABLE_MOVIE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(TABLE_MOVIE, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(TABLE_MOVIE, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(TABLE_MOVIE, _ID + " = ?", new String[]{id});
     }
 }

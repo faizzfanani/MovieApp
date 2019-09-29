@@ -31,7 +31,6 @@ import java.util.Objects;
 public class SearchResultActivity extends AppCompatActivity {
     private static final String MOVIE_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US&query=";
     private static final String TVSHOWS_SEARCH = "https://api.themoviedb.org/3/search/tv?api_key=bda489bfab0d87f4b3c4af88e206e0a4&language=en-US&query=";
-    String URL_SEARCH;
 
     private ArrayList<MovieModel> movieModels;
 
@@ -59,7 +58,11 @@ public class SearchResultActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         movieModels = new ArrayList<>();
 
-        loadProducts(query);
+        if(type.equals("movie")){
+            loadMovie(query);
+        }else if(type.equals("tvshow")){
+            loadTvShow(query);
+        }
 
         queryResult.setText(getString(R.string.query_result)+" '"+query+"'");
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -69,18 +72,12 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         });
     }
-    private void loadProducts(String query) {
+    private void loadMovie(String query) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.loading_indicator));
         progressDialog.show();
 
-        if(type.equals("movie")){
-            URL_SEARCH = MOVIE_SEARCH;
-        }else if(type.equals("tvshow")){
-            URL_SEARCH = TVSHOWS_SEARCH;
-        }
-
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL_SEARCH+query, null, new Response.Listener
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, MOVIE_SEARCH+query, null, new Response.Listener
                 <JSONObject>(){
             @Override
             public void onResponse(JSONObject response) {
@@ -133,6 +130,65 @@ public class SearchResultActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getApplicationContext()));
         requestQueue.add(objectRequest);
     }
+    private void loadTvShow(final String query) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.loading_indicator));
+        progressDialog.show();
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, TVSHOWS_SEARCH+query, null, new Response.Listener
+                <JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                progressDialog.dismiss();
+                try {
+                    JSONArray jsonArray = response.optJSONArray("results");
+                    dataId = new String[jsonArray.length()];
+                    dataTitle = new String[jsonArray.length()];
+                    dataDescription = new String[jsonArray.length()];
+                    dataVote = new String[jsonArray.length()];
+                    dataReleaseDate = new String[jsonArray.length()];
+                    dataPhoto = new String[jsonArray.length()];
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject movie = jsonArray.optJSONObject(i);
+                        dataId[i] = movie.getString("id");
+                        dataTitle[i] = movie.getString("name");
+                        dataDescription[i] = movie.getString("overview");
+                        dataVote[i] = movie.getString("vote_average");
+                        dataReleaseDate[i] = movie.getString("first_air_date");
+                        dataPhoto[i] = movie.getString("poster_path");
+                        movieModels.add(new MovieModel(
+                                dataId[i],
+                                dataTitle[i],
+                                dataDescription[i],
+                                dataVote[i],
+                                dataReleaseDate[i],
+                                dataPhoto[i]
+                        ));
+                    }
+
+                    adapter = new ListAdapter(Objects.requireNonNull(getApplicationContext()), movieModels);
+                    recyclerView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getApplicationContext()));
+        requestQueue.add(objectRequest);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

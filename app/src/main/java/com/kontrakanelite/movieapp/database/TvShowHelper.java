@@ -80,4 +80,35 @@ public class TvShowHelper {
     public int delete(int id) {
         return database.delete(TABLE_TV_SHOW, _ID + " = '" + id + "'", null);
     }
+    public Cursor queryByIdProvider(String id) {
+        return database.query(TABLE_TV_SHOW, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public Cursor queryProvider() {
+        return database.query(TABLE_TV_SHOW
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(TABLE_TV_SHOW, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(TABLE_TV_SHOW, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(TABLE_TV_SHOW, _ID + " = ?", new String[]{id});
+    }
 }

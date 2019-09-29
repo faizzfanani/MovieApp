@@ -34,6 +34,9 @@ public class DetailFilmActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private DatabaseHelper dataBaseHelper;
 
+    public static final String MOVIE_EXTRA = "movie";
+    public static final String TVSHOW_EXTRA = "tvshows";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

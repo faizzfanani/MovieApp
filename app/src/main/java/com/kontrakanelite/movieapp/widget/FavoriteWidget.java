@@ -10,7 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.kontrakanelite.movieapp.R;
-import com.kontrakanelite.movieapp.StackWidgetService;
+import com.kontrakanelite.movieapp.service.StackWidgetService;
 
 public class FavoriteWidget extends AppWidgetProvider {
     private static final String TOAST_ACTION = "com.kontrakanelite.movieapp.widget.TOAST_ACTION";
@@ -25,6 +25,7 @@ public class FavoriteWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.favorite_widget);
         views.setRemoteAdapter(R.id.stack_view, intent);
         views.setEmptyView(R.id.stack_view, R.id.empty_view);
+
         Intent toastIntent = new Intent(context, FavoriteWidget.class);
         toastIntent.setAction(FavoriteWidget.TOAST_ACTION);
         toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -36,6 +37,7 @@ public class FavoriteWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         super.onReceive(context, intent);
         if (intent.getAction() != null) {
             if (intent.getAction().equals(TOAST_ACTION)) {

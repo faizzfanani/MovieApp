@@ -1,5 +1,6 @@
 package com.kontrakanelite.movieapp.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,6 +27,7 @@ public class MovieHelper {
     private Context context;
     private DatabaseHelper dataBaseHelper;
     private SQLiteDatabase database;
+    @SuppressLint("StaticFieldLeak")
     private static MovieHelper INSTANCE;
 
     public MovieHelper(Context context) {

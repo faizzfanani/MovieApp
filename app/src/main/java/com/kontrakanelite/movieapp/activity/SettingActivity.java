@@ -62,7 +62,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.switchReleaseTodayReminder:
                 if (b){
-                    alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER,"11:36","tes bro");
+                    alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER, getString(R.string.release_reminder_time),getString(R.string.new_release));
                 }
                 else {
                     alarmReceiver.cancelAlarm(this,AlarmReceiver.TYPE_RELEASE_TODAY_REMINDER);

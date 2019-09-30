@@ -49,13 +49,12 @@ public class AlarmReceiver extends BroadcastReceiver{
     public static final String EXTRA_TYPE = "type";
 
     final String URL_MOVIE_RELEASE = "https://api.themoviedb.org/3/discover/movie?api_key=bda489bfab0d87f4b3c4af88e206e0a4&primary_release_date.gte=";
-    final String URL_TVSHOW_RELEASE = "https://api.themoviedb.org/3/discover/tv?api_key=bda489bfab0d87f4b3c4af88e206e0a4&first_air_date.gte=";
 
     ArrayList<MovieModel>movieModels;
     private final int ID_DAILY = 100;
     private final int ID_UPCOMING = 101;
 
-    int notifId;
+    //int notifId;
     String[] dataId, dataTitle, dataDescription, dataReleaseDate, dataVote, dataPhoto;
 
     @Override
@@ -64,7 +63,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         assert type != null;
         String title = type.equalsIgnoreCase(TYPE_DAILY_REMINDER) ? TYPE_DAILY_REMINDER : TYPE_RELEASE_TODAY_REMINDER;
-        notifId = type.equalsIgnoreCase(TYPE_DAILY_REMINDER) ? ID_DAILY : ID_UPCOMING;
+        int notifId = type.equalsIgnoreCase(TYPE_DAILY_REMINDER) ? ID_DAILY : ID_UPCOMING;
         if (type.equalsIgnoreCase(TYPE_DAILY_REMINDER))
             showDailyNotification(context, title, message, notifId);
         else if (type.equalsIgnoreCase(TYPE_RELEASE_TODAY_REMINDER)){
@@ -72,8 +71,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String sDate = dateFormat.format(date);
 
-            getMovieRelease(context, "2019-09-06");
-            //getTvShowRelease(context, "2015-08-23");
+            getMovieRelease(context, sDate, notifId);
         }
     }
 
@@ -132,7 +130,8 @@ public class AlarmReceiver extends BroadcastReceiver{
         Intent intent = new Intent(context, DetailFilmActivity.class);
         intent.putExtra(DetailFilmActivity.MOVIE,movie);
         intent.putExtra(EXTRA_TYPE, type);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManagerCompat = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentIntent(pendingIntent)
@@ -170,7 +169,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         }
     }
 
-    public void getMovieRelease(final Context context, String date){
+    public void getMovieRelease(final Context context, String date, final int notifId){
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL_MOVIE_RELEASE+date+"&primary_release_date.lte="+date, null, new Response.Listener
                 <JSONObject>(){
             @Override
@@ -218,54 +217,6 @@ public class AlarmReceiver extends BroadcastReceiver{
         RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(context));
         requestQueue.add(objectRequest);
     }
-    public void getTvShowRelease(Context context,String date){
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL_TVSHOW_RELEASE+date+"&first_air_date.lte="+date, null, new Response.Listener
-                <JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.optJSONArray("results");
-                    dataId = new String[jsonArray.length()];
-                    dataTitle = new String[jsonArray.length()];
-                    dataDescription = new String[jsonArray.length()];
-                    dataVote = new String[jsonArray.length()];
-                    dataReleaseDate = new String[jsonArray.length()];
-                    dataPhoto = new String[jsonArray.length()];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject movie = jsonArray.optJSONObject(i);
-                        dataId[i] = movie.getString("id");
-                        dataTitle[i] = movie.getString("name");
-                        dataDescription[i] = movie.getString("overview");
-                        dataVote[i] = movie.getString("vote_average");
-                        dataReleaseDate[i] = movie.getString("first_air_date");
-                        dataPhoto[i] = movie.getString("poster_path");
-                        movieModels.add(new MovieModel(
-                                dataId[i],
-                                dataTitle[i],
-                                dataDescription[i],
-                                dataVote[i],
-                                dataReleaseDate[i],
-                                dataPhoto[i]
-                        ));
-                        Log.i("releasenotif","new tv shows");
-                        Log.i("releasenotif",movie.getString("name"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(context));
-        requestQueue.add(objectRequest);
-        setTvShow(context, movieModels, notifId);
-    }
 
     public void setMovies(final Context context, final ArrayList<MovieModel> movies, final int notifId) {
         new Thread(new Runnable() {
@@ -276,24 +227,6 @@ public class AlarmReceiver extends BroadcastReceiver{
                     try {
                         URL url = new URL(movie.getImage());
                         showNewRelease(context,context.getString(R.string.new_release),movie, BitmapFactory.decodeStream(url.openConnection().getInputStream()),id, "movie");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    id++;
-                }
-            }
-        }).start();
-    }
-
-    public void setTvShow(final Context context, final ArrayList<MovieModel> tvShows, final int notifId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int id = notifId;
-                for (MovieModel tvShow:tvShows){
-                    try {
-                        URL url = new URL(tvShow.getImage());
-                        showNewRelease(context,context.getString(R.string.new_release),tvShow, BitmapFactory.decodeStream(url.openConnection().getInputStream()),id, "tvshow");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

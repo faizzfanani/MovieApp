@@ -1,7 +1,14 @@
 package com.kontrakanelite.movieapp.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.BaseColumns;
+
+import com.kontrakanelite.movieapp.database.DatabaseContract;
+
+import static com.kontrakanelite.movieapp.database.DatabaseContract.getColumnInt;
+import static com.kontrakanelite.movieapp.database.DatabaseContract.getColumnString;
 
 public class MovieModel implements Parcelable {
     private String image;
@@ -19,6 +26,24 @@ public class MovieModel implements Parcelable {
         this.description = description;
         this.vote = vote;
         this.date = date;
+    }
+    public MovieModel(int ID, String id, String title, String description, String vote, String date, String image) {
+        this.ID = ID;
+        this.image = image;
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.vote = vote;
+        this.date = date;
+    }
+    MovieModel(Cursor cursor){
+        this.ID = getColumnInt(cursor, BaseColumns._ID);
+        this.id = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_ID);
+        this.title = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_TITLE);
+        this.description = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_DESCRIPTION);
+        this.date = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_DATE);
+        this.vote = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_VOTE);
+        this.image = getColumnString(cursor, DatabaseContract.MovieColumns.MOVIE_POSTER);
     }
 
     public int getID() {

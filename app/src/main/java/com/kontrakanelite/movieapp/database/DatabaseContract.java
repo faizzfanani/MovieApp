@@ -14,11 +14,11 @@ public class DatabaseContract {
     public static final class MovieColumns implements BaseColumns {
 
         public static String MOVIE_ID = "id";
-        static String MOVIE_TITLE = "title";
-        static String MOVIE_DESCRIPTION = "description";
-        static String MOVIE_VOTE = "vote";
-        static String MOVIE_DATE = "date";
-        static String MOVIE_POSTER = "poster";
+        public static String MOVIE_TITLE = "title";
+        public static String MOVIE_DESCRIPTION = "description";
+        public static String MOVIE_VOTE = "vote";
+        public static String MOVIE_DATE = "date";
+        public static String MOVIE_POSTER = "poster";
 
         public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
@@ -34,11 +34,6 @@ public class DatabaseContract {
         static String TV_VOTE = "vote";
         static String TV_DATE = "date";
         static String TV_POSTER = "poster";
-
-        public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
-                .authority(AUTHORITY)
-                .appendPath(TABLE_TV_SHOW)
-                .build();
     }
 
     public static String getColumnString(Cursor cursor, String columnName) {

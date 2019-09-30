@@ -1,5 +1,8 @@
 package com.kontrakanelite.movieapp.activity;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +15,7 @@ import com.kontrakanelite.movieapp.R;
 import com.kontrakanelite.movieapp.adapter.TvFavoriteAdapter;
 import com.kontrakanelite.movieapp.database.TvShowHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
+import com.kontrakanelite.movieapp.widget.FavoriteWidget;
 
 import java.util.ArrayList;
 
@@ -50,6 +54,16 @@ public class TvShowFavoriteActivity extends AppCompatActivity {
         tvHelper.close();
         adapter.addItem(movieModel);
         recyclerView.setAdapter(adapter);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(getApplicationContext(), FavoriteWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplicationContext(),FavoriteWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
     }
     @Override
     public void onBackPressed() {

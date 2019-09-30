@@ -1,5 +1,8 @@
 package com.kontrakanelite.movieapp.activity;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +24,7 @@ import com.kontrakanelite.movieapp.database.MovieHelper;
 import com.kontrakanelite.movieapp.database.TvShowHelper;
 import com.kontrakanelite.movieapp.model.MovieModel;
 import com.kontrakanelite.movieapp.R;
+import com.kontrakanelite.movieapp.widget.FavoriteWidget;
 
 public class DetailFilmActivity extends AppCompatActivity {
     String id, posterSource, type, posterPath;
@@ -34,8 +38,8 @@ public class DetailFilmActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private DatabaseHelper dataBaseHelper;
 
-    public static final String MOVIE_EXTRA = "movie";
-    public static final String TVSHOW_EXTRA = "tvshows";
+    //public static final String MOVIE_EXTRA = "movie";
+    //public static final String TVSHOW_EXTRA = "tvshows";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,12 @@ public class DetailFilmActivity extends AppCompatActivity {
                         favoriteTvShow();
                         btnFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_fill));}
                 }
+                Intent intent = new Intent(getApplicationContext(), FavoriteWidget.class);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+                int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplicationContext(),FavoriteWidget.class));
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                sendBroadcast(intent);
             }
         });
     }
